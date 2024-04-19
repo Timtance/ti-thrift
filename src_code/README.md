@@ -1,17 +1,5 @@
-# Ti-Thrift
-- 基于thrift实现前端htmlJs与后端nodeJs之间的兼容本地域解决方案
-- Example of a compatible local domain solution between frontend htmlJs and backend nodeJs based on Thrift
-
 # Thrift
-你可以使用thrift库来实现在前端使用Thrift协议与后端的Node.js进行通信的解决方案。
-
-Thrift是一种跨语言的服务定义和通信协议，它允许你定义数据类型和服务接口，并生成相应语言的代码。在你的情况下，你可以使用Thrift来定义前后端之间的数据类型和接口，并生成对应的JavaScript代码。
-
-在前端，你可以使用ti-thrift库来处理Thrift协议的通信。它提供了一些工具和函数，可以帮助你在前端使用Thrift协议与后端进行通信。
-
-在后端，你可以使用Node.js的thrift库来处理Thrift协议的通信。它提供了一些函数和类，可以帮助你在Node.js中实现Thrift服务端。
-
-通过使用ti-thrift和Node.js的thrift库，你可以实现前后端之间基于Thrift协议的通信，并在本地域中进行数据交互。
+RPC架构， 通过协议文件编译出指定的端处理文件
 
 # 环境
 - install node 16.0.0
@@ -25,9 +13,9 @@ Thrift是一种跨语言的服务定义和通信协议，它允许你定义数�
 - https://github.com/apache/thrift/blob/master/tutorial/tutorial.thrift
 - https://github.com/apache/thrift/blob/master/tutorial/shared.thrift
 ## Node端 编译命令
-- npm run nodeClientThrift
+- thrift -r --gen js:node tutorial.thrift
 ## JS端 编译命令
-- nodeHtmlThrift
+- thrift -r --gen js:jquery tutorial.thrift
 
 # NODE-NODE
 ## 启动 后端服务

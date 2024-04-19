@@ -1,0 +1,127 @@
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Thrift Javascript Bindings - Tutorial Example</title>
+
+  <script src="../lib/thrift.js" type="text/javascript"></script>
+  <script src="../gen-js/tutorial_types.js" type="text/javascript"></script>
+  <script src="../gen-js/shared_types.js" type="text/javascript"></script>
+  <script src="../gen-js/SharedService.js" type="text/javascript"></script>
+  <script src="../gen-js/Calculator.js" type="text/javascript"></script>
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <script type="text/javascript" charset="utf-8">
+    //<![CDATA[
+    $(document).ready(function () {
+      $("#op").children().remove();
+      $.each(tutorial.Operation, function (key, value) {
+        $('#op').append($("<option></option>").attr("value", value).text(key));
+      });
+
+      $('table.calculator').attr('width', 500);
+    });
+
+    function calc() {
+      var transport = new Thrift.TXHRTransport("http://localhost:9090");
+      var protocol = new Thrift.TJSONProtocol(transport);
+      var client = new tutorial.CalculatorClient(protocol);
+
+      var num1 = document.getElementById("num1").value;
+      var num2 = document.getElementById("num2").value;
+
+      client.add(num1, num2, function (result, status, response) {
+        console.log("Result: ", result, status, response);
+      })
+      // , function(result) {
+      //   console.log("Result: " + result);
+      // });
+      // var work = new tutorial.Work();
+      // work.num1 = $("#num1").val();
+      // work.num2 = $("#num2").val();
+      // work.op = $("#op").val();
+
+      // try {
+      //   result = client.calculate(1, work);
+      //   $('#result').val(result);
+      //   $('#result').css('color', 'black');
+      // } catch(ouch){
+      //   $('#result').val(ouch.why);
+      //   $('#result').css('color', 'red');
+      // }
+
+    }
+
+    function test() {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "http://localhost:9090"); // 设置请求地址
+      xhr.setRequestHeader("Content-Type", "application/json"); // 设置请求头为 JSON
+      // xhr.setRequestHeader("Content-Type", "application/vnd.apache.thrift.json; charset=utf-8"); // 设置请求头为 JSON
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          console.log(xhr.responseText);
+        } else {
+          console.error('Request failed with status:', xhr.status);
+        }
+      };
+      xhr.onerror = function () {
+        console.error('Request failed');
+      };
+      // 发送 JSON 数据
+      xhr.send(JSON.stringify([1, "add", 1, 0, { "1": { "i32": 10 }, "2": { "i32": 5 } }]));
+    }
+
+    function auto_calc() {
+      if ($('#autoupdate:checked').val() !== undefined) {
+        calc();
+      }
+    }
+    //]]>
+  </script>
+
+</head>
+
+<body>
+  <h2>Thrift Javascript Bindings</h2>
+  <form action="">
+    <table class="calculator">
+      <tr>
+        <td>num1</td>
+        <td><input type="text" id="num1" value="10" onkeyup="javascript:auto_calc();" /></td>
+      </tr>
+      <tr>
+        <td>Operation</td>
+        <td><select id="op" size="1" onchange="javascript:auto_calc();">
+            <option></option>
+          </select></td>
+      </tr>
+      <tr>
+        <td>num2</td>
+        <td><input type="text" id="num2" value="5" onkeyup="javascript:auto_calc();" /></td>
+      </tr>
+      <tr>
+        <td>result</td>
+        <td><input type="text" id="result" value="" /></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" id="autoupdate" checked="checked" />autoupdate</td>
+        <td><input type="button" id="calculate" value="calculate" onclick="javascript:calc();" /></td>
+      </tr>
+      <tr>
+        <td><input type="button" value="测试" onclick="javascript:test();" /></td>
+      </tr>
+    </table>
+  </form>
+
+  <p>This Java Script example uses <a
+      href="https://github.com/apache/thrift/blob/master/tutorial/tutorial.thrift">tutorial.thrift</a> and a Thrift
+    server using JSON protocol and HTTP transport.
+  </p>
+  <p>
+    <a href="http://validator.w3.org/check/referer"><img src="http://www.w3.org/Icons/valid-xhtml10"
+        alt="Valid XHTML 1.0!" height="31" width="88" /></a>
+  </p>
+</body>
+
+</html>

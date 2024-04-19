@@ -1,0 +1,19 @@
+{
+  "name": "ti-thrift",
+  "description": "基于thrift实现前端htmlJs与后端nodeJs之间的兼容本地域解决方案示例",
+  "version": "0.0.1",
+  "scripts": {
+    "nodeClientThrift": "thrift -r --gen js:node ./src_code/tutorial.thrift",
+    "nodeClientServer": "node ./src_code/nodeClientServer.js",
+    "nodeClient": "node ./src_code/nodeClient.js",
+    "nodeHtmlThrift": "thrift -r --gen js:jquery ./src_code/tutorial.thrift",
+    "nodeHtmlServer": "node ./src_code/nodeHtmlServer.js",
+    "nodeHtml": "http-server --cors ./src_code/index.html"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "http-server": "^14.1.1",
+    "thrift": "^0.20.0"
+  }
+}
