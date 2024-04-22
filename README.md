@@ -65,3 +65,27 @@ https://github.com/apache/thrift/blob/master/lib/js/src/thrift.js
 * transport: xhr
 */
 ```
+
+# 补充：
+- Nodejs:  thrift -r --gen js:node tutorial.thrift
+- Python：thrift -r --gen py tutorial.thrift
+- htmlJs：thrift -r --gen js:jquery tutorial.thrift
+
+## thrift数据请求Head设置
+- 通过 jquery发送数据请求， Content-Type类型是 application/vnd.apache.thrift.json; charset=utf-8
+服务器处理：可通过中间件来解析Thrift格式的JSON数据，
+
+## 数据请求流程
+- 前端请求(Thrift处理封装) ----JSON数据---->服务端（Thrift解析处理）-----业务逻辑(Thrift处理封装)----->接口返回
+
+## Thrift处理封装的数据
+- JSON格式示例：JSON.stringify([1, "add", 1, 0, { "1": { "i32": 10 }, "2": { "i32": 5 } }])
+- 备注：add是协议定义的方法， 10 和 5 是参数
+
+## 重点
+- 在于服务端的解析，对HTMLJscript请求，由Thrift按协议文件封装传输数据。
+- 由于Thrift 是RPC架构 主要解决的服务与服务之间的通讯， HtmlJavascript传输是JSON数据并由特定的类型，所以服务端解析处理不一样，不能直接采用Thrift提供的监听处理。
+## 解决方案概要
+- 采用express实现可处理本地域的数据，通过解析层对数据进行提取在data层进行叠加后抛给回调函数。回调函数接收到数据后，交给Thrift解析，由手动模式提取Input参数数据，并借助Thrift原有的流转机制，设定Output回调处理封装成Thrift协议数据, 通过express的res输出进行接口响应。
+### 备注
+- 上面有提到的涉及文件就是Thrift内部流转所打点的文件
