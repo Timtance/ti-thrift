@@ -1,6 +1,7 @@
-# Ti-Thrift
+# Thrift架构本地域解决方案
 - 基于thrift实现前端htmlJs与后端nodeJs之间的兼容本地域解决方案
 - Example of a compatible local domain solution between frontend htmlJs and backend nodeJs based on Thrift
+- 后方有方案概要以及排摸出Thrift流转所涉及到的底层文件
 
 # Thrift
 你可以使用thrift库来实现在前端使用Thrift协议与后端的Node.js进行通信的解决方案。
