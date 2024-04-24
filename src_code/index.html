@@ -33,6 +33,7 @@
 
       client.add(num1, num2, function (result, status, response) {
         console.log("Result: ", result, status, response);
+        document.getElementById("result").value = result;
       })
       // , function(result) {
       //   console.log("Result: " + result);

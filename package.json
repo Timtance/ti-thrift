@@ -1,7 +1,7 @@
 {
   "name": "ti-thrift",
   "description": "基于thrift实现前端htmlJs与后端nodeJs之间的兼容本地域解决方案示例",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "scripts": {
     "nodeClientThrift": "thrift -r --gen js:node ./src_code/tutorial.thrift",
     "nodeClientServer": "node ./src_code/nodeClientServer.js",
